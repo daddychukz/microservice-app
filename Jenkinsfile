@@ -13,7 +13,7 @@ pipeline {
                 cd ${WORKSPACE}/code/services/characters
                 REPO="characters"
                 #Build container images using Dockerfile
-                sudo docker build --no-cache -t ${REPO}:${BUILD_NUMBER} .
+                docker build -t ${REPO}:${BUILD_NUMBER} .
               '''
             }
       }
