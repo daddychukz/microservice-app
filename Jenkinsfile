@@ -17,14 +17,6 @@ pipeline {
               '''
             }
       }
-    stage('Authenticate registry') {
-      agent { label 'master' }
-      steps {
-          sh '''
-                aws ecr get-login --no-include-email --region us-east-2 | bash
-              '''
-            }
-      }
     stage('Pushing_Image_To_ECR') {
       agent { label 'master' }
       steps {
