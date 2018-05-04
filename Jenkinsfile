@@ -21,6 +21,7 @@ pipeline {
       agent { label 'master' }
       steps {
           sh '''
+                aws ecr get-login --no-include-email --region us-east-2 | bash
                 REG_ADDRESS="726336258647.dkr.ecr.us-east-2.amazonaws.com"
                 REPO="characters"
                 #Tag the build with BUILD_NUMBER version
