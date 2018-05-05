@@ -36,21 +36,11 @@ pipeline {
       agent { label 'master' }
       steps {
             sh '''
-            echo "Tag=${BUILD_NUMBER}" > sshenv
-            echo "target=${env}" >> sshenv
-            scp sshenv admin@52.14.3.95:~/.ssh/environment
-            ssh -T -o StrictHostKeyChecking=no -l admin 52.14.3.95 <<'EOF'
             DEPLOYMENT_NAME="characters"
             CONTAINER_NAME="characters"
-            NEW_DOCKER_IMAGE="726336258647.dkr.ecr.us-east-2.amazonaws.com/characters:${Tag}"
-            if [ "${target}" = "NoDeploy" ]
-            then
-            echo "No deployment to K8s"
-            else
+            NEW_DOCKER_IMAGE="726336258647.dkr.ecr.us-east-2.amazonaws.com/characters:${BUILD_NUMBER}"
             kubectl set image deployment/$DEPLOYMENT_NAME $CONTAINER_NAME=$NEW_DOCKER_IMAGE
             kubectl rollout status deployment $DEPLOYMENT_NAME
-            fi
-            EOF'''
         }
       }
   }
