@@ -39,7 +39,7 @@ pipeline {
             DEPLOYMENT_NAME="characters"
             CONTAINER_NAME="characters"
             NEW_DOCKER_IMAGE="726336258647.dkr.ecr.us-east-2.amazonaws.com/characters:${BUILD_NUMBER}"
-            kubectl set image deployment/$DEPLOYMENT_NAME $CONTAINER_NAME=$NEW_DOCKER_IMAGE
+            kubectl set image deployment/$DEPLOYMENT_NAME $DEPLOYMENT_NAME=$NEW_DOCKER_IMAGE
             kubectl rollout status deployment $DEPLOYMENT_NAME
             '''
         }
