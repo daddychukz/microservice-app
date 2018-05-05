@@ -35,7 +35,6 @@ pipeline {
     stage('Deploy_In_Kubernetes') {
       agent { label 'master' }
       steps {
-          sshagent ( credentials: []) {
             sh '''
             echo "Tag=${BUILD_NUMBER}" > sshenv
             echo "target=${env}" >> sshenv
@@ -52,7 +51,6 @@ pipeline {
             kubectl rollout status deployment $DEPLOYMENT_NAME
             fi
             EOF'''
-          }
         }
       }
   }
