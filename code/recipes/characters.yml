@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
       - name: characters
-        image: 726336258647.dkr.ecr.us-east-2.amazonaws.com/characters:v1
+        image: 726336258647.dkr.ecr.us-east-2.amazonaws.com/characters:21
         ports:
         - containerPort: 8081
 ---
