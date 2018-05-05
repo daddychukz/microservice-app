@@ -36,6 +36,7 @@ pipeline {
       agent { label 'master' }
       steps {
             sh '''
+            echo $REGISTRY_URL
             DEPLOYMENT_NAME="characters-deployment"
             CONTAINER_NAME="characters"
             NEW_DOCKER_IMAGE="726336258647.dkr.ecr.us-east-2.amazonaws.com/characters:${BUILD_NUMBER}"
