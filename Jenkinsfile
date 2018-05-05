@@ -36,7 +36,7 @@ pipeline {
       agent { label 'master' }
       steps {
             sh '''
-            DEPLOYMENT_NAME="characters-deplyment"
+            DEPLOYMENT_NAME="characters-deployment"
             CONTAINER_NAME="characters"
             NEW_DOCKER_IMAGE="726336258647.dkr.ecr.us-east-2.amazonaws.com/characters:${BUILD_NUMBER}"
             kubectl set image deployment/$DEPLOYMENT_NAME $CONTAINER_NAME=$NEW_DOCKER_IMAGE
