@@ -39,7 +39,6 @@ pipeline {
             DEPLOYMENT_NAME="characters-deployment"
             CONTAINER_NAME="characters"
             NEW_DOCKER_IMAGE="726336258647.dkr.ecr.us-east-2.amazonaws.com/characters:${BUILD_NUMBER}"
-            kops validate cluster --name chuks-cluster.k8s.local --state s3://chuks-cluster-1525508433
             cat ${WORKSPACE}/code/recipes/characters.yml
             kubectl apply -f ${WORKSPACE}/code/recipes/characters.yml
             kubectl get deployments
