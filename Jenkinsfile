@@ -1,10 +1,5 @@
 pipeline {
   agent any
-
-  parameters {
-    string(name: 'env', defaultValue: 'Deploy', description: 'Development Environment')
-  }
-
   stages {
     stage('Building_Character_Image') {
       agent { label 'master' }

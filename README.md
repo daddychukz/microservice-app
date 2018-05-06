@@ -2,7 +2,7 @@
 
 ![kubernetes](images/kubernetes.png)
 
-In this workshop we will deploy twoo microservices as containers running in a Kubernetes cluster. Traffic will reach the containers through a Kubernnete Ingress with Nginx routing traffiic to the two different services based on the path of the request.
+In this workshop we will deploy twoo microservices as containers running in a Kubernetes cluster. Traffic will reach the containers through aa Kubernete Ingress with Nginx routing traffiic to the two different services based on the path of the request
 
 &nbsp;
 
