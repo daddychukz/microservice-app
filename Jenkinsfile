@@ -68,9 +68,9 @@ pipeline {
             NEW_DOCKER_IMAGE1="726336258647.dkr.ecr.us-east-2.amazonaws.com/characters:${BUILD_NUMBER}"
             NEW_DOCKER_IMAGE2="726336258647.dkr.ecr.us-east-2.amazonaws.com/locations:${BUILD_NUMBER}"
             NEW_DOCKER_IMAGE3="726336258647.dkr.ecr.us-east-2.amazonaws.com/nginx-router:${BUILD_NUMBER}"
-            kubectl set image deployment/$DEPLOYMENT_NAME1 $CONTAINER_NAME=$NEW_DOCKER_IMAGE1
-            kubectl set image deployment/$DEPLOYMENT_NAME $CONTAINER_NAME=$NEW_DOCKER_IMAGE2
-            kubectl set image deployment/$DEPLOYMENT_NAME $CONTAINER_NAME=$NEW_DOCKER_IMAGE3
+            kubectl set image deployment/$DEPLOYMENT_NAME1 $CONTAINER_NAME1=$NEW_DOCKER_IMAGE1
+            kubectl set image deployment/$DEPLOYMENT_NAME2 $CONTAINER_NAME2=$NEW_DOCKER_IMAGE2
+            kubectl set image deployment/$DEPLOYMENT_NAME3 $CONTAINER_NAME3=$NEW_DOCKER_IMAGE3
             kubectl rollout status deployment $DEPLOYMENT_NAME1
             kubectl rollout status deployment $DEPLOYMENT_NAME2
             kubectl rollout status deployment $DEPLOYMENT_NAME3
