@@ -6,6 +6,7 @@ read server_name
 javaSetup(){
     sudo add-apt-repository ppa:webupd8team/java -y
     sudo apt-get update && sudo apt-get install oracle-java8-installer -y
+    sudo apt install jq -y
 }
 
 dockerSetup(){
@@ -16,6 +17,15 @@ dockerSetup(){
     sudo apt-get install -y docker-ce
 }
 
+setupKubernetes(){
+sudo curl -LO https://github.com/kubernetes/kops/releases/download/$(curl -s https://api.github.com/repos/kubernetes/kops/releases/latest | grep tag_name | cut -d '"' -f 4)/kops-linux-amd64
+sudo chmod +x kops-linux-amd64
+sudo mv kops-linux-amd64 /usr/local/bin/kops
+sudo curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+sudo chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+}
+
 configureNginx(){
 if [[ -e /etc/nginx/sites-enabled/jenkins ]]; then
         echo Nginx already configured
@@ -23,7 +33,7 @@ else
 echo --------------- configuring nginx server -----------------
 sudo apt-get install nginx -y
 sudo cp -f /etc/nginx/sites-enabled/default nginx-default-server
-sudo rm -r /etc/nginx/sites-enabled/default
+sudo rm -r /etc/nginx/sites-available/default
 sudo bash -c 'cat > /etc/nginx/sites-available/jenkins <<EOF
 upstream app_server {
     server 127.0.0.1:8080 fail_timeout=0;
@@ -35,8 +45,8 @@ server {
     server_name '$server_name';
 
     location / {
-        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-        proxy_set_header Host $http_host;
+        proxy_set_header X-Forwarded-For "$proxy_add_x_forwarded_for";
+        proxy_set_header Host "$http_host";
         proxy_redirect off;
 
         if (!-f $request_filename) {
@@ -44,7 +54,8 @@ server {
             break;
         }
     }
-}EOF'
+}
+EOF'
 sudo ln -fs /etc/nginx/sites-available/jenkins /etc/nginx/sites-enabled/jenkins
 fi
 sudo service nginx restart
@@ -71,21 +82,16 @@ configureJenkins(){
     sudo usermod -aG docker jenkins
     echo "change Jenkins password"
     sudo passwd jenkins
+    sudo usermod -a -G sudo jenkins
     su jenkins
-    aws configure
-}
-
-awscliconfig(){
-    #configure AWS
-    aws configure   
 }
 
 main(){
     javaSetup
     dockerSetup
     configureNginx
+    setupKubernetes
     awscliSetup
     configureJenkins
-    awscliconfig
 }
 main "$@"

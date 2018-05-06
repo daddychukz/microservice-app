@@ -28,7 +28,7 @@ pipeline {
       steps {
           sh '''
                 cd ${WORKSPACE}/code/services/nginx
-                REPO="nginx"
+                REPO="nginx-router"
                 #Build container images using Dockerfile
                 docker build --no-cache -t ${REPO}:${BUILD_NUMBER} .
               '''
