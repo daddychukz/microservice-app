@@ -45,11 +45,11 @@ server {
     server_name '$server_name';
 
     location / {
-        proxy_set_header X-Forwarded-For "$proxy_add_x_forwarded_for";
-        proxy_set_header Host "$http_host";
+        proxy_set_header X-Forwarded-For '$proxy_add_x_forwarded_for';
+        proxy_set_header Host '$http_host';
         proxy_redirect off;
 
-        if (!-f $request_filename) {
+        if (!-f '$request_filename') {
             proxy_pass http://app_server;
             break;
         }
