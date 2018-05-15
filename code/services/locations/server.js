@@ -1,38 +1,24 @@
-const app = require('koa')();
-const router = require('koa-router')();
-const db = require('./db.json');
+const express = require('express');
+const logger = require('morgan');
+const bodyParser = require('body-parser');
+const models  = require('./models');
+const routes = require('./routes/index');
 
-// Log requests
-app.use(function *(next) {
-  const start = new Date;
-  yield next;
-  const ms = new Date - start;
-  console.log('%s %s - %s', this.method, this.url, ms);
+const router  = express.Router();
+const app = express();
+app.use(logger('dev'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
+
+app.use('/', routes);
+
+const port = process.env.PORT || 8081;
+app.set('port', port);
+
+
+app.listen(port, () => {
+  console.log(`The server is listening on port ${port}`);
 });
 
-router.get('/api/locations', function *() {
-  this.body = db.locations;
-});
+module.exports = app;
 
-router.get('/api/locations/:id', function *() {
-  const id = parseInt(this.params.id, 10);
-  this.body = db.locations.find((location) => location.id === id);
-});
-
-router.get('/api/', function *() {
-  this.body = 'API ready to receive requests';
-});
-
-router.get('/', function *() {
-  this.body = 'Ready to receive requests';
-});
-
-app.use(router.routes());
-app.use(router.allowedMethods());
-
-var server = app.listen(8081);
-
-process.on('SIGTERM', function() {
-  console.log('Shutting down...');
-  server.close();
-});
