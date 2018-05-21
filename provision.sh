@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo 'Enter your instance IP'
+echo 'Enter your server address'
 read server_name
 
 javaSetup(){
