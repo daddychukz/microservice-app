@@ -31,7 +31,7 @@ createCluster(){
 echo ----------------- Creating Cluster ------------------------
 kops create cluster --name $NAME --master-count 1 --node-count 2 \
 --node-size t2.micro --cloud aws --master-size t2.micro --zones us-east-2b \
---networking kubenet --kubernetes-version v1.8.4 --yes --image "099720109477/ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20180405"
+--networking kubenet --vpc $vpc_id --kubernetes-version v1.8.4 --yes --image "099720109477/ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20180405"
 # kops create cluster --name $NAME --node-count 2 --node-size \
 # t2.micro --master-size t2.micro --zones us-east-2b --dns private \
 # --topology private --vpc $vpc_id --networking weave --bastion \
