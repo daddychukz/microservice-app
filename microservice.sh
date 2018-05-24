@@ -7,6 +7,8 @@
 
 echo 'Enter your VPC ID'
 read vpc_id
+echo 'Enter your Subnet ID'
+read subnet_id
 
 setEnvironmentVariables(){
 echo ---------------- Setting environment variables ----------------------
@@ -29,13 +31,13 @@ export KOPS_STATE_STORE=s3://$BUCKET_NAME
 
 createCluster(){
 echo ----------------- Creating Cluster ------------------------
-kops create cluster --name $NAME --master-count 1 --node-count 2 \
---node-size t2.micro --cloud aws --master-size t2.micro --zones us-east-2b \
---networking kubenet --vpc $vpc_id --kubernetes-version v1.8.4 --yes --image "099720109477/ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20180405"
-# kops create cluster --name $NAME --node-count 2 --node-size \
-# t2.micro --master-size t2.micro --zones us-east-2b --dns private \
-# --topology private --vpc $vpc_id --networking weave --bastion \
-# --kubernetes-version v1.8.4 --yes --image "099720109477/ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20180405"
+# kops create cluster --name $NAME --master-count 1 --node-count 2 \
+# --node-size t2.micro --cloud aws --master-size t2.micro --zones us-east-2b \
+# --networking kubenet --kubernetes-version v1.8.4 --yes --image "099720109477/ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20180405"
+kops create cluster --name $NAME --node-count 2 --cloud aws \
+--node-size t2.micro --master-size t2.micro --zones us-east-2b \
+--topology private --vpc $vpc_id --subnets $subnet_id --networking weave \
+--yes --image "099720109477/ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20180405"
 }
 
 buildCluster(){
@@ -77,7 +79,7 @@ setEnvironmentVariables
 createBucket
 createCluster
 buildCluster
-createRepo
+# createRepo
 authenticateToRepo
 kops validate cluster
 echo "Finished!"
