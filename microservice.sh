@@ -7,10 +7,6 @@
 
 echo 'Enter your VPC ID'
 read vpc_id
-echo 'Enter your Subnet ID'
-read subnet_id
-echo 'Enter your Utility subnet ID'
-read utility_subnet
 
 setEnvironmentVariables(){
 echo ---------------- Setting environment variables ----------------------
@@ -35,7 +31,7 @@ createCluster(){
 echo ----------------- Creating Cluster ------------------------
 kops create cluster --name $NAME --master-count 1 --node-count 2 \
 --node-size t2.micro --cloud aws --master-size t2.micro --zones us-east-2b \
---networking kubenet --kubernetes-version v1.8.4 --yes --image "099720109477/ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20180405"
+--topology private --networking weave --kubernetes-version v1.8.4 --yes --image "099720109477/ubuntu/images/hvm-ssd/ubuntu-xenial-16.04-amd64-server-20180405"
 # kops create cluster --name $NAME --node-count 2 --cloud aws \
 # --node-size t2.micro --master-size t2.micro --utility-subnets $utility_subnet --zones us-east-2b \
 # --topology private --vpc $vpc_id --subnets $subnet_id  --networking weave \
