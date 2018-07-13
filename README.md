@@ -1,10 +1,16 @@
-## Node.js deployed on AWS using Kubernetes
+## Deploy Microservice on AWS using Kubernetes
+This is a simple microservice application consisting of two services ([Characters](code/services/characters/server.js) and [Locations](code/services/locations/server.js) services) in NodeJs.
+### Technologies Used:
+- **Docker:** For building images
+- **Jenkins:** For Continuous Integration and Deployment
+- **AWS:** Cloud Platform
+- **Bash Shell Scripts:** Provisioning
+- **Nginx:** Loadbalancer Ingress
+- **KOPS:** For Container Orchestration
+
 
 ![kubernetes](images/kubernetes.png)
 
-In this workshop we will deploy twoo microservices as containers running in a Kubernetes cluster. Traffic will reach the containers through aa Kubernete Ingress with Nginx routing traffiic to the two different services based on the path of the request
-
-&nbsp;
 
 &nbsp;
 
