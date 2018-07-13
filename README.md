@@ -1,4 +1,4 @@
-# Node.js deployed on AWS using Kubernetes
+## Node.js deployed on AWS using Kubernetes
 
 ![kubernetes](images/kubernetes.png)
 
